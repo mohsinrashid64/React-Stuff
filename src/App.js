@@ -1,23 +1,15 @@
 // import { Component } from 'react';
+import { Component } from 'react';
 import './App.css';
-import Heading from "./Components/heading.js"
-import List from './Components/list';
 
+import Heading from "./Components/heading"
+import Card from "./Components/card"
 
-/////////////////////////////////////////////
-// Importing multiple exports
-// import pi, {doublePi, triplePi} from './Components/math'; // Note: Default Import Name does not Matter. However in the curly brackets name does matter.
-// OR
-import * as pi from "./Components/math";
-/////////////////////////////////////////////
-
-//
 
 
 function App() {
   return (
     <div className="App">
-      {/* <h1>App Page</h1> */}
       <Heading/>
       <List/>
       {/* <ul>
