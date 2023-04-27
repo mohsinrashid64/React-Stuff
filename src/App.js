@@ -1,38 +1,19 @@
 // import { Component } from 'react';
 import './App.css';
-import Heading from "./Components/heading.js"
-import List from './Components/list';
+import Heading from "./Components/Heading.js"
+import Login from "./Components/Login.js"
 
 
-/////////////////////////////////////////////
-// Importing multiple exports
-// import pi, {doublePi, triplePi} from './Components/math'; // Note: Default Import Name does not Matter. However in the curly brackets name does matter.
-// OR
-import * as pi from "./Components/math";
-/////////////////////////////////////////////
 
-//
+var isLoggedIn = false
+const currentTime = new Date(2019,11,1,9).getHours();
 
 
 function App() {
   return (
-    <div className="App">
-      {/* <h1>App Page</h1> */}
-      <Heading/>
-      <List/>
-      {/* <ul>
-        <li>{pi}</li>
-        <li>{doublePi()}</li>
-        <li>{triplePi()} </li>
-      </ul> */}
-      {/* OR */}
-      <ul>
-        <li>{pi.default}</li>
-        <li>{pi.doublePi()}</li>
-        <li>{pi.triplePi()} </li>
-      </ul>
-
-
+    <div className="container">
+      {isLoggedIn ? <h1>Hello</h1> : <Login/>}
+      {currentTime < 12 && <h1>Why are you Working Man</h1>}
     </div>
   );
 }
