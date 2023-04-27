@@ -1,24 +1,28 @@
 // import { Component } from 'react';
 import './App.css';
-import Heading from "./Components/Heading.js"
-import Form from "./Components/Form.js"
+// import Heading from "./Components/Heading.js"
+import React, { useState } from "react";
 
-
-
-var userIsRegistered = false
-const currentTime = new Date(2019,11,1,9).getHours();
 
 
 function App() {
+  const [count, setCount] = useState(0);
+
+  function increase() {
+    setCount(count + 1);
+  }
+
+  function decrease() {
+    setCount(count - 1);
+  }
+
   return (
     <div className="container">
-      <Form
-        isRegistered={userIsRegistered}
-      />
+      <h1>{count}</h1>
+      <button onClick={decrease}>-</button>
+      <button onClick={increase}>+</button>
     </div>
   );
 }
 
 export default App;
-
-
