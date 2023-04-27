@@ -1,19 +1,20 @@
 // import { Component } from 'react';
 import './App.css';
 import Heading from "./Components/Heading.js"
-import Login from "./Components/Login.js"
+import Form from "./Components/Form.js"
 
 
 
-var isLoggedIn = false
+var userIsRegistered = false
 const currentTime = new Date(2019,11,1,9).getHours();
 
 
 function App() {
   return (
     <div className="container">
-      {isLoggedIn ? <h1>Hello</h1> : <Login/>}
-      {currentTime < 12 && <h1>Why are you Working Man</h1>}
+      <Form
+        isRegistered={userIsRegistered}
+      />
     </div>
   );
 }
