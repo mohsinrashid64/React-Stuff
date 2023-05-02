@@ -1,34 +1,33 @@
-// import { Component } from 'react';
-import './App.css';
-// import Heading from "./Components/Heading.js"
 import React, { useState } from "react";
 
-
-
 function App() {
-  const [count, setCount] = useState(0);
-  function increase() {
-    setCount(count + 1);
-  }
-  function decrease() {
-    setCount(count - 1);
+  const [headingText, setHeadingText] = useState("Hello");
+  const [isMousedOver, setMouseOver] = useState(false);
+
+  function handleClick() {
+    setHeadingText("Submitted");
   }
 
-  const now = new Date().toLocaleTimeString();
-  const [time,setTime] = useState(now);
-
-  function updateTime(){
-    const newTime = new Date().toLocaleTimeString();
-    setTime(newTime)
+  function handleMouseOver() {
+    setMouseOver(true);
   }
+
+  function handleMouseOut() {
+    setMouseOver(false);
+  }
+
   return (
     <div className="container">
-      <h1>{count}</h1>
-      <button onClick={decrease}>-</button>
-      <button onClick={increase}>+</button>
-      <h1>{time}</h1>
-      <button onClick={updateTime}>Get Time</button>
-
+      <h1>{headingText}</h1>
+      <input type="text" placeholder="What's your name?" />
+      <button
+        style={{ backgroundColor: isMousedOver ? "black" : "white" }}
+        onClick={handleClick}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
+        Submit
+      </button>
     </div>
   );
 }
