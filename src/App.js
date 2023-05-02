@@ -1,34 +1,36 @@
 // import { Component } from 'react';
 import './App.css';
-// import Heading from "./Components/Heading.js"
-import React, { useState } from "react";
+import Heading from "./Components/Heading.js"
+import animals from "./assets/data"
 
+
+// Destructuring Through Array
+
+const [cat,dog,lion,griaffe]=animals; // You can write anything inplace of "cat" and "dog"
+console.log(cat)
+console.log(dog)
+
+// Destructuring Through Object
+const { name, sound } = cat // "name" and "sound" are properties of the object so there name has to be the same as in the object
+// or
+const { name:dogName, sound:dogSound } = dog
+
+const { name:lionName, sound:lionSound="roar" } = lion
+
+const { name:griaffeName, sound:griaffeSound, feedingRequirements:{food,water} } = griaffe
 
 
 function App() {
-  const [count, setCount] = useState(0);
-  function increase() {
-    setCount(count + 1);
-  }
-  function decrease() {
-    setCount(count - 1);
-  }
 
-  const now = new Date().toLocaleTimeString();
-  const [time,setTime] = useState(now);
-
-  function updateTime(){
-    const newTime = new Date().toLocaleTimeString();
-    setTime(newTime)
-  }
   return (
     <div className="container">
-      <h1>{count}</h1>
-      <button onClick={decrease}>-</button>
-      <button onClick={increase}>+</button>
-      <h1>{time}</h1>
-      <button onClick={updateTime}>Get Time</button>
+      <Heading/>
+      <p>{cat["name"]} {cat["sound"]}</p>
+      <p>{dog["name"]} {dog["sound"]}</p>
 
+      <p>{name} {sound}</p>
+      <p>{dogName} {dogSound}</p>
+      <p>{lionName} {lionSound}</p>
     </div>
   );
 }
