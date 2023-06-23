@@ -10,6 +10,9 @@ const [cat,dog,lion,griaffe]=animals; // You can write anything inplace of "cat"
 console.log(cat)
 console.log(dog)
 
+
+
+
 // Destructuring Through Object
 const { name, sound } = cat // "name" and "sound" are properties of the object so there name has to be the same as in the object
 // or
