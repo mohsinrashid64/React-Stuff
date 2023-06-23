@@ -2,7 +2,7 @@
 
 export default function Heading(){
     return (
-        <h1>Map-Filter-Reduce</h1>
+        <h1>Spread Operator</h1>
     )
 }
 
