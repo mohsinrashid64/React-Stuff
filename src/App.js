@@ -1,11 +1,7 @@
 // import { Component } from 'react';
 import './App.css';
 import Heading from "./Components/Heading.js"
-<<<<<<< Updated upstream
 import animals from "./assets/data"
-=======
-import React, { useState } from "react";
->>>>>>> Stashed changes
 
 
 // Destructuring Through Array
@@ -29,16 +25,8 @@ function App() {
   return (
     <div className="container">
       <Heading/>
-<<<<<<< Updated upstream
       <p>{cat["name"]} {cat["sound"]}</p>
       <p>{dog["name"]} {dog["sound"]}</p>
-=======
-      <h1>{count}</h1>
-      <button onClick={decrease}>-</button>
-      <button onClick={increase}>+</button>
-      <h1>{time}</h1>
-      <button onClick={updateTime}>Get Time</button>
->>>>>>> Stashed changes
 
       <p>{name} {sound}</p>
       <p>{dogName} {dogSound}</p>
