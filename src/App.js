@@ -19,7 +19,17 @@ const fruitsVar = fruits.map(function(param){
   return param ;
 })
 
+const fullName = {
+  fname: "Schenider",
+  lname: "Electric"
+}
 
+const user = {
+  ...fullName,
+  id:1,
+  username: "se101"
+  
+}
 function App() {
   return (
     <div className="App">
@@ -30,7 +40,12 @@ function App() {
       <p>
         {fruitsVar + " "}
       </p>
-      
+      <p>
+        {user["fname"] + " " + user["lname"] + " " + user["id"] + " " + user["username"] }
+      </p>
+      <p>
+        {`${user.fname}  ${user.lname} ${user.id} ${user.username} `}
+      </p>
     </div>
   );
 }
