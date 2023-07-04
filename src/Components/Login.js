@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Validation from './LoginValidation';
+import axios from 'axios';
 
 export default function Login(){
     const[values,setValues] = useState({
@@ -15,6 +16,19 @@ export default function Login(){
     const handleSubmit=(event)=>{
         event.preventDefault();
         setErrors(Validation(values))
+        if(errors.email === "" && errors.password === ""){
+            axios.post("http://localhost:8081/login",values)
+            .then(res=>{
+                if(res.data === "Success"){
+                    console.log("LOGIN, IT WORAKS");
+                } else{
+                    console.log("WHAT THE HAIL, FAILURE")
+                }
+                
+
+            })
+            .catch(err=>console.log(err));
+        }
     }
     return(
         <div>
