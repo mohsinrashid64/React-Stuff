@@ -1,67 +1,123 @@
-const express = require("express");
-const mysql = require('mysql');
+
+const express = require('express');
 const cors = require('cors');
-const routes = require("./routes");
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
+const PORT = process.env.PORT || 5000; // Use environment variable or default to 5000
+
+
+
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "signup"
+// Connect to MongoDB Atlas
+const uri = 'mongodb+srv://massdriver64:4deMi0rcvl2tdSPr@cluster0.8bs3d0v.mongodb.net/?retryWrites=true&w=majority';
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const connection = mongoose.connection;
+
+connection.once('open', () => {
+  console.log('Connected to MongoDB Atlas');
 });
 
-// Connect to the database
-db.connect((err) => {
-    if (err) {
-        console.error("Error connecting to the database: ", err);
-        return;
-    }
-    console.log("Connected to the database");
-});
 
-app.post('/signup', (req, res) => {
-    const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?, ?, ?)";
-    const values = [
-        req.body.name,
-        req.body.email,
-        req.body.password
-    ];
 
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error("Error executing SQL query: ", err);
-            return res.json("Error");
-        }
-        console.log("Data inserted successfully");
-        return res.json(result);
-    });
-});
+const signUpScheema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: String
+  });
 
-app.post('/login', (req, res) => {
-    const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
-    const values = [
-        req.body.email,
-        req.body.password
-    ];
 
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error("Error executing SQL query: ", err);
-            return res.json("Error");
-        }
 
-        if (result.length > 0) {
-            return res.json("Success");
-        } else {
-            return res.json("Failed");
-        }
-    });
-});
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+  
 
-app.listen(8081, () => {
-    console.log("Listening on port 3306");
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// OLD SQL STUFF
+// const express = require("express");
+// const mysql = require('mysql');
+// const cors = require('cors');
+// const routes = require("./routes");
+
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
+
+// const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "signup"
+// });
+
+// // Connect to the database
+// db.connect((err) => {
+//     if (err) {
+//         console.error("Error connecting to the database: ", err);
+//         return;
+//     }
+//     console.log("Connected to the database");
+// });
+
+// app.post('/signup', (req, res) => {
+//     const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?, ?, ?)";
+//     const values = [
+//         req.body.name,
+//         req.body.email,
+//         req.body.password
+//     ];
+
+//     db.query(sql, values, (err, result) => {
+//         if (err) {
+//             console.error("Error executing SQL query: ", err);
+//             return res.json("Error");
+//         }
+//         console.log("Data inserted successfully");
+//         return res.json(result);
+//     });
+// });
+
+// app.post('/login', (req, res) => {
+//     const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
+//     const values = [
+//         req.body.email,
+//         req.body.password
+//     ];
+
+//     db.query(sql, values, (err, result) => {
+//         if (err) {
+//             console.error("Error executing SQL query: ", err);
+//             return res.json("Error");
+//         }
+
+//         if (result.length > 0) {
+//             return res.json("Success");
+//         } else {
+//             return res.json("Failed");
+//         }
+//     });
+// });
+
+// app.listen(8081, () => {
+//     console.log("Listening on port 3306");
+// });
