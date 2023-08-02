@@ -1,13 +1,10 @@
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = process.env.PORT || 5000; // Use environment variable or default to 5000
-
-
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -24,100 +21,71 @@ connection.once('open', () => {
   console.log('Connected to MongoDB Atlas');
 });
 
+// Define the Mongoose schema and model
+const signUpSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+});
+
+const SignUpModel = mongoose.model('SignUp', signUpSchema);
+
+app.post('/getsignupdetails', async (req, res) => {
+    const { email } = req.body; // Ensure the 'password' field is in the request body
+  console.log("YO",req.body['name'])
+  console.log("YOoooooooo",typeof(req.body['name']))
+
+  const _user = await SignUpModel.findOne( {email} ); // Find the user by both email and password
+  console.log("USER", _user);
+  if (_user) {
+    console.log("USER ALREADY EXISTS")
+    // res.status(401).json({ message: "User already exists" });
+  }
+  else{
+    const newSignupData = new SignUpModel({
+        name:req.body['name'],
+        email:req.body['email'],
+        password:req.body['password'],
+      });
+    
+      try {
+        await newSignupData.save();
+        res.json('Sign Up Data Added!');
+      } catch (err) {
+        console.log(err);
+        res.status(400).json('Error adding todo');
+      }
+  }
+  
+});
 
 
-const signUpScheema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String
-  });
+app.post('/getlogindetails', async (req, res) => {
+    const { email, password } = req.body; // Ensure the 'password' field is in the request body
+    try {
+        const user = await SignUpModel.findOne({ email, password }); // Find the user by both email and password
+        if (user) {
+            console.log("User exists!");
+            // Do something if the user exists
+            // For example, you can send a success response back to the client
+            res.status(200).json({ message: "Login successful!" });
+        } else {
+            console.log("User does not exist!");
+            // Do something if the user does not exist
+            // For example, you can send a failure response back to the client
+            res.status(401).json({ message: "Invalid credentials!" });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 
+app.get('/sendlogindetails',async(req,res)=>{
+
+});
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// OLD SQL STUFF
-// const express = require("express");
-// const mysql = require('mysql');
-// const cors = require('cors');
-// const routes = require("./routes");
-
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "signup"
-// });
-
-// // Connect to the database
-// db.connect((err) => {
-//     if (err) {
-//         console.error("Error connecting to the database: ", err);
-//         return;
-//     }
-//     console.log("Connected to the database");
-// });
-
-// app.post('/signup', (req, res) => {
-//     const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?, ?, ?)";
-//     const values = [
-//         req.body.name,
-//         req.body.email,
-//         req.body.password
-//     ];
-
-//     db.query(sql, values, (err, result) => {
-//         if (err) {
-//             console.error("Error executing SQL query: ", err);
-//             return res.json("Error");
-//         }
-//         console.log("Data inserted successfully");
-//         return res.json(result);
-//     });
-// });
-
-// app.post('/login', (req, res) => {
-//     const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
-//     const values = [
-//         req.body.email,
-//         req.body.password
-//     ];
-
-//     db.query(sql, values, (err, result) => {
-//         if (err) {
-//             console.error("Error executing SQL query: ", err);
-//             return res.json("Error");
-//         }
-
-//         if (result.length > 0) {
-//             return res.json("Success");
-//         } else {
-//             return res.json("Failed");
-//         }
-//     });
-// });
-
-// app.listen(8081, () => {
-//     console.log("Listening on port 3306");
-// });
+  console.log(`Server is running on port ${PORT}`);
+});
