@@ -1,49 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [fullName, setFullName] = useState({
-    fName: "",
-    lName: ""
-  });
+  const [clickCount, setClickCount] = useState(0);
 
-  function handleChange(event) {
-    const { value, name } = event.target;
+  // Function to handle the click event
+  const handleClick = () => {
+    setClickCount(clickCount + 1);
+  };
 
-    setFullName(prevValue => {
-      if (name === "fName") {
-        return {
-          fName: value,
-          lName: prevValue.lName
-        };
-      } else if (name === "lName") {
-        return {
-          fName: prevValue.fName,
-          lname: value
-        };
-      }
-    });
-  }
+  useEffect(() => {
+    // Add the click event listener when the component mounts
+    document.addEventListener('click', handleClick);
+
+    // Cleanup function: Remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []); // Empty dependency array for componentDidMount-like behavior
 
   return (
-    <div className="container">
-      <h1>
-        Hello {fullName.fName} {fullName.lName}
-      </h1>
-      <form>
-        <input
-          name="fName"
-          onChange={handleChange}
-          placeholder="First Name"
-          value={fullName.fName}
-        />
-        <input
-          name="lName"
-          onChange={handleChange}
-          placeholder="Last Name"
-          value={fullName.lName}
-        />
-        <button>Submit</button>
-      </form>
+    <div>
+      <p>Click count: {clickCount}</p>
+      <button onClick={handleClick}>Click me</button>
     </div>
   );
 }
